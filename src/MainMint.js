@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {ethers, BigNumber} from 'ethers'
-import roboPunksNFT from './RoboPunksNFT.json'
+import RoboPunks from './/RoboPunksNFT.json'
 
 const roboPunksNFTAddress = '0x6548346B417AC7994D7504165cb2CDaDCd65b629';
 
@@ -10,17 +10,19 @@ const MainMint = ({accounts,SetAccounts}) => {
 
     async function handleMint() {
         if (window.ethereum) {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const contract = new ethers.Contract(
                 roboPunksNFTAddress,
-                abi,
+                RoboPunks.abi,
                 signer
             );
             try {
-                const response = await contract.mint(BigNumber.from(mintAmount));
+                const response = await contract.mint(BigNumber.from(mintAmount), {
+                    value: ethers.utils.parseEther((0.02 * mintAmount).toString()),
+                });
                 console.log('response: ', response)
-            } catch (err){
+            } catch (err) {
                 console.log("error", err)
             }
         }
@@ -47,7 +49,7 @@ const MainMint = ({accounts,SetAccounts}) => {
                         <input type="number" value={mintAmount}/>
                         <button onClick={handleIncrement}>+</button>
                     </div>
-                    <button onclick={handleMint}>Mint</button>
+                    <button onClick={handleMint}>Mint</button>
                 </div>
                 ) : (
                 <p>You must connect first!</p>
