@@ -14,7 +14,7 @@ const MainMint = ({accounts,SetAccounts}) => {
             const signer = provider.getSigner();
             const contract = new ethers.Contract(
                 roboPunksNFTAddress,
-                roboPunksNFT.ABI,
+                abi,
                 signer
             );
             try {
