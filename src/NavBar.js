@@ -23,10 +23,26 @@ const NavBar = ({accounts, setAccounts}) => {
                     <Image src={Facebook} boxSize="42px" margin="0 15px"/>
                 </Link>
             </Flex>
+            <Flex
+                justify="space-around"
+                align="center"
+                width="40%"
+                padding="30px"
+            >
             <div>about</div>
             <div>mint</div>
-
-            {isConnected ? (<p>Connected</p>) : (<button onClick={connectAccount}>Connect</button>)}
+            </Flex>
+            {isConnected ? (<Box margin="0 15px">Connected</Box>) : 
+            (<Button 
+            backgroundColor="#D6517D"
+            borderRadius="5px"
+            boxShadow="0px 2px 2px 1px #0F0F0F"
+            color="white"
+            cursor="pointer"
+            fontFamily="inherit"
+            padding="15px"
+            margin="0 15px"            
+            onClick={connectAccount}>Connect</Button>)}
 
         </Flex>
     )
