@@ -1,11 +1,13 @@
 import {useState} from 'react';
 import {ethers, BigNumber} from 'ethers'
 import RoboPunks from './/RoboPunksNFT.json'
+const jsonData = require('./abi.json');
 
 const roboPunksNFTAddress = '0x6548346B417AC7994D7504165cb2CDaDCd65b629';
 
 const MainMint = ({accounts,SetAccounts}) => {
     const [mintAmount, setMintAmount] = useState(1);
+    const [supply, setSupply] = useState(0)
     const isConnected = Boolean(accounts[0]);
 
     async function handleMint() {
@@ -27,6 +29,11 @@ const MainMint = ({accounts,SetAccounts}) => {
             }
         }
     }
+    async function showMint() {
+        const contract = new ethers.Contract('0x6548346b417ac7994d7504165cb2cdadcd65b629', jsonData, window.ethereum)
+        const data = await contract.functions.totalSupply()
+        console.log("10")
+    }
 
     const handleDecrement = () => {
         if (mintAmount <= 1) return;
@@ -37,7 +44,6 @@ const MainMint = ({accounts,SetAccounts}) => {
         if(mintAmount >= 3) return;
         setMintAmount(mintAmount + 1);
     }
-
     return (
         <div>
             <h1>RoboPunks</h1>
@@ -54,6 +60,9 @@ const MainMint = ({accounts,SetAccounts}) => {
                 ) : (
                 <p>You must connect first!</p>
             )}
+            <div>
+                <button onClick={showMint}>Number</button>
+            </div>
         </div>
     )
 }
